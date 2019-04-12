@@ -1,0 +1,21 @@
+{
+  "name": "lit-state",
+  "version": "1.0.0",
+  "description": "Creating lit-html function components with state",
+  "main": "src/lit-state.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lit",
+    "lit-html",
+    "npm",
+    "state",
+    "functional"
+  ],
+  "author": "Amoroth",
+  "license": "MIT",
+  "peerDependencies": {
+    "lit-html": "^1.0.0"
+  }
+}
