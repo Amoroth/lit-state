@@ -9,7 +9,7 @@ export const renderDOM = (entryComponent) => {
   updateDOM(entryComponent)
 }
 
-export const statefulDirective = directive((component, state) => (part) => {
+export const connectState = directive((component, state) => (part) => {
   let myState = stateMap.get(part)
   if (myState === undefined) {
     myState = Object.assign({}, state)
