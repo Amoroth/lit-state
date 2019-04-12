@@ -3,6 +3,11 @@
   "version": "1.0.1",
   "description": "Creating lit-html function components with state",
   "main": "src/lit-state.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Amoroth/lit-state.git"
+  },
+  "homepage": "https://github.com/Amoroth/lit-state#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
