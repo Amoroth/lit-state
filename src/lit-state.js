@@ -2,12 +2,18 @@ import { directive, render, html } from 'lit-html'
 
 const stateMap = new WeakMap()
 
-const updateDOM = comp => render(comp(), document.body)
+const updateDOM = (comp, target) => {
+  render(comp(), target)
+}
 
-export const renderDOM = (entryComponent) => {
+export const renderDOM = (entryComponent, target) => {
   let wrapperComponent = entryComponent.prototype ? entryComponent : () => html`${entryComponent}`
-  window.addEventListener('updateDOM', () => updateDOM(wrapperComponent))
-  updateDOM(wrapperComponent)
+  let targetNode = document.querySelector(target)
+  if (!targetNode) {
+    throw new Error('Couldn\'t find target node!')
+  }
+  window.addEventListener('updateDOM', () => updateDOM(wrapperComponent, targetNode))
+  updateDOM(wrapperComponent, targetNode)
 }
 
 export const connectState = directive((component, state) => (part) => {
