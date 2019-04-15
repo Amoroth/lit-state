@@ -8,9 +8,12 @@ const updateDOM = (comp, target) => {
 
 export const renderDOM = (entryComponent, target) => {
   let wrapperComponent = entryComponent.prototype ? entryComponent : () => html`${entryComponent}`
-  let targetNode = document.querySelector(target)
-  if (!targetNode) {
-    throw new Error('Couldn\'t find target node!')
+  let targetNode = document.body
+  if (target) {
+    targetNode = document.querySelector(target)
+    if (!targetNode) {
+      throw new Error('Couldn\'t find target node!')
+    }
   }
   window.addEventListener('updateDOM', () => updateDOM(wrapperComponent, targetNode))
   updateDOM(wrapperComponent, targetNode)
