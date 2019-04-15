@@ -1,6 +1,6 @@
 {
   "name": "lit-state",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Creating lit-html function components with state",
   "main": "src/lit-state.js",
   "repository": {
