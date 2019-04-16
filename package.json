@@ -9,7 +9,7 @@
   },
   "homepage": "https://github.com/Amoroth/lit-state#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "lit",
@@ -21,6 +21,13 @@
   "author": "Amoroth",
   "license": "MIT",
   "peerDependencies": {
+    "lit-html": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
     "lit-html": "^1.0.0"
   }
 }
