@@ -54,7 +54,7 @@ import { renderDOM } from 'lit-state'
 
 const App = () => html`<div>Hello World!</div>`
 
-renderDOM(App)
+renderDOM(App, '#root')
 ```
 
-You have to only supply the root component. The component will then by appended to the document body.
+You have to only supply the root component and a query selector, where to mount it in the document. If no selector was provided, component will be mounted to the document body.
