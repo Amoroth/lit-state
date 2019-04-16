@@ -2,21 +2,27 @@ import { directive, render, html } from 'lit-html'
 
 const stateMap = new WeakMap()
 
-const updateDOM = (comp, target) => {
-  render(comp(), target)
+let wrapperComponent = null
+let targetNode = document.body
+
+const updateDOM = () => {
+  render(wrapperComponent(), targetNode)
 }
 
 export const renderDOM = (entryComponent, target) => {
-  let wrapperComponent = entryComponent.$statefulComponent ? () => html`${entryComponent}` : entryComponent
-  let targetNode = document.body
+  if (!entryComponent) {
+    throw new Error('First argument has to be an html template!')
+  }
+  if (wrapperComponent !== entryComponent) {
+    wrapperComponent = entryComponent.$statefulComponent ? () => html`${entryComponent}` : entryComponent
+  }
   if (target) {
     targetNode = document.querySelector(target)
     if (!targetNode) {
       throw new Error('Couldn\'t find target node!')
     }
   }
-  window.addEventListener('updateDOM', () => updateDOM(wrapperComponent, targetNode))
-  updateDOM(wrapperComponent, targetNode)
+  updateDOM()
 }
 
 const stateDirective = (component, state) => {
@@ -28,7 +34,7 @@ const stateDirective = (component, state) => {
     }
     const compSetState = (newState) => {
       stateMap.set(part, { ...compState, ...newState })
-      window.dispatchEvent(new Event('updateDOM'))
+      updateDOM()
     }
     part.setValue(component({
       state: Object.assign({}, compState),
