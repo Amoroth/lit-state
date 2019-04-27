@@ -9,7 +9,7 @@
   },
   "homepage": "https://github.com/Amoroth/lit-state#readme",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watch"
   },
   "keywords": [
     "lit",

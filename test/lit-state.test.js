@@ -3,7 +3,7 @@ import { renderDOM, connectState } from '../src/lit-state'
 
 const initialState = {
   firstValue: 1,
-  secondValue: false
+  secondValue: false,
 }
 
 beforeEach(() => {
@@ -32,6 +32,15 @@ test('renders template to DOM', () => {
   expect(document.querySelector('button')).toBeTruthy()
 })
 
+test('renders to target node', () => {
+  renderDOM(() => html`<div id="empty"></div><div id="root"></div>`)
+  renderDOM(getApp(), '#root')
+  expect(document.querySelector('#empty').children.length).toBe(0)
+  expect(document.querySelector('#root').children.length).toBe(1)
+})
+
+// can mount to selector or node
+
 test('updates state', () => {
   renderDOM(getApp())
   expect(document.querySelector('p').textContent).toBe('1')
@@ -56,16 +65,6 @@ test('state update changes only this component', () => {
   expect(components[2].querySelector('p').textContent).toBe('3')
 })
 
-test('renders to target node', () => {
-  document.body.appendChild(document.createElement('div'))
-  document.body.appendChild(document.createElement('div'))
-  document.querySelectorAll('div')[0].id = 'empty'
-  document.querySelectorAll('div')[1].id = 'root'
-  renderDOM(getApp(), '#root')
-  expect(document.querySelector('#empty').children.length).toBe(0)
-  expect(document.querySelector('#root').children.length).toBe(1)
-})
-
 test('setState mutates only provided properties', () => {
   renderDOM(getApp())
   expect(document.querySelectorAll('p')[0].textContent).toBe('1')
@@ -85,8 +84,5 @@ test('changes to state directly does not mutate state', () => {
   expect(document.querySelectorAll('p')[1].textContent).toBe('false')
 })
 
-// state deep clone
-
 // can pass props
 
-// can mount to selector or node

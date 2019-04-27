@@ -21,6 +21,8 @@ export const renderDOM = (entryComponent, target) => {
     if (!targetNode) {
       throw new Error('Couldn\'t find target node!')
     }
+  } else {
+    targetNode = document.body
   }
   updateDOM()
 }
