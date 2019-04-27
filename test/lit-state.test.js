@@ -1,4 +1,4 @@
-import { html, render } from 'lit-html'
+import { html } from 'lit-html'
 import { renderDOM, connectState } from '../src/lit-state'
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
 }
 
 beforeEach(() => {
-  render(html``, document.body)
+  renderDOM(() => html``)
 })
 
 const getApp = () => {
@@ -19,7 +19,7 @@ const getApp = () => {
     <div>
       <p>${state.firstValue}</p>
       <p>${state.secondValue}</p>
-      <button @click=${changeState}>Change</button>
+      <button @click=${changeState} @keypress=${() => state.secondValue = true}>Change</button>
     </div>`
   }, initialState)
 }
@@ -76,7 +76,17 @@ test('setState mutates only provided properties', () => {
 })
 
 // changes to state directly does not mutate state
+test('changes to state directly does not mutate state', () => {
+  renderDOM(getApp())
+  expect(document.querySelectorAll('p')[1].textContent).toBe('false')
+  document.querySelector('button').dispatchEvent(new Event('keypress'))
+  expect(document.querySelectorAll('p')[1].textContent).toBe('false')
+  document.querySelector('button').click()
+  expect(document.querySelectorAll('p')[1].textContent).toBe('false')
+})
 
 // state deep clone
 
 // can pass props
+
+// can mount to selector or node
