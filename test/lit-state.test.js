@@ -39,7 +39,13 @@ test('renders to target node', () => {
   expect(document.querySelector('#root').children.length).toBe(1)
 })
 
-// can mount to selector or node
+test('can mount to selector or node', () => {
+  renderDOM(() => html`<div id="one"></div><div id="two"></div>`)
+  renderDOM(getApp(), '#one')
+  expect(document.querySelector('#one div')).toBeTruthy()
+  renderDOM(getApp(), document.querySelector('#two'))
+  expect(document.querySelector('#two div')).toBeTruthy()
+})
 
 test('updates state', () => {
   renderDOM(getApp())
@@ -74,7 +80,6 @@ test('setState mutates only provided properties', () => {
   expect(document.querySelectorAll('p')[1].textContent).toBe('false')
 })
 
-// changes to state directly does not mutate state
 test('changes to state directly does not mutate state', () => {
   renderDOM(getApp())
   expect(document.querySelectorAll('p')[1].textContent).toBe('false')
@@ -85,4 +90,3 @@ test('changes to state directly does not mutate state', () => {
 })
 
 // can pass props
-
