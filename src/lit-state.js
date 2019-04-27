@@ -17,7 +17,7 @@ export const renderDOM = (entryComponent, target) => {
     wrapperComponent = entryComponent.$statefulComponent ? () => html`${entryComponent}` : entryComponent
   }
   if (target) {
-    targetNode = document.querySelector(target)
+    targetNode = typeof target === 'string' ? document.querySelector(target) : target
     if (!targetNode) {
       throw new Error('Couldn\'t find target node!')
     }
