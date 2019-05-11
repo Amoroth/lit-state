@@ -23,7 +23,7 @@ const greeter = ({ state }) => html`<p>Hello ${state.name}!</p>`
 export default connectState(greeter, initialState)
 ```
 
-State is passed to component through an object so you can easily extract it with destructuring. The returned state is immutable though, changing it will have no effect on a component and can cause some problems by having local state "desynced" with the real state of a component.
+It returns a function to initialize the component. State is passed to component through an object so you can easily extract it with destructuring. The returned state is immutable though, changing it will have no effect on a component and can cause some problems by having local state "desynced" with the real state of a component.
 
 You can change the state by using another supplyed function, `setState`.
 
@@ -46,6 +46,17 @@ const hesitant = ({ state, setState }) => {
 
 The state will be changed this way and triggier a rerender. It is alse worth noting, that the state will change only properties specified in setState function, without touching other values.
 
+To pass props to a component, you can just provide an object when calling the function and extract it the same way as state.
+```javascript
+const showMe = connectState(({ props }) => {
+  return html`<p>I can see... ${props.thing}</p>`
+}, {})
+
+const exposer = () => {
+  return html`${showMe({ thing: 'banana' })}`
+}
+```
+
 Rerendering the page with setState will only take place when the root component is mounted to the DOM with `renderDOM` function.
 
 ```javascript
@@ -54,7 +65,7 @@ import { renderDOM } from 'lit-state'
 
 const App = () => html`<div>Hello World!</div>`
 
-renderDOM(App, '#root')
+renderDOM(App(), '#root')
 ```
 
 You have to only supply the root component and a query selector, where to mount it in the document. If no selector was provided, component will be mounted to the document body.
