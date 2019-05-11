@@ -27,7 +27,7 @@ export const renderDOM = (entryComponent, target) => {
   updateDOM()
 }
 
-const stateDirective = (component, state) => {
+const stateDirective = (component, state, props) => {
   const innerPart = (part) => {
     let compState = stateMap.get(part)
     if (compState === undefined) {
@@ -41,10 +41,12 @@ const stateDirective = (component, state) => {
     part.setValue(component({
       state: Object.assign({}, compState),
       setState: compSetState,
+      props: props || {},
     }))
   }
   innerPart.$statefulComponent = true
   return innerPart
 }
 
-export const connectState = directive(stateDirective)
+export const connectState = (component, state) => (props) => 
+  directive(stateDirective)(component, state, props)
